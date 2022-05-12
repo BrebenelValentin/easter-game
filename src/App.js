@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import GameWrapper from './components/GameWrapper';
+import useFetch from './components/useFetch';
+import GamePopup from './components/GamePopup';
+import TermsAndConditions from './components/TermsAndCondtions';
+
 
 function App() {
+  const queryParams = new URLSearchParams(window.location.search);
+  const guid = queryParams.get('guid');
+  const [guidValue, setGuidValue] = useState(guid);
+  const {data: claim} = useFetch("http://localhost:8000/claim");
+
+  
+  
+  const claimRequest = (claim) => {
+    const host = window.location.origin;
+    const url = host + '/claim/random?guid=' + guid;
+    let claimStatus = "";
+
+    claim.map((i) => {
+      claimStatus = i.status
+    })
+
+    return claimStatus;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {claim && <GameWrapper claimStatus={claimRequest(claim)}/>}
+      {claim && <GamePopup claimStatus={claimRequest(claim)}/>}
+      <TermsAndConditions/>
     </div>
   );
 }
