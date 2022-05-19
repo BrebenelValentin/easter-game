@@ -5,6 +5,7 @@ const GameBoard = ({prizes, randomPackage, elemPositions}) => {
     targetElements.forEach((item, index) => {
         item.querySelector('p').innerHTML = prizes[randomPackage].positions[index] + "%"
         item.setAttribute('data-prize', prizes[randomPackage].positions[index]);
+        item.classList.add('gridElm' + prizes[randomPackage].positions[index]);
     })
  
     return (
@@ -18,9 +19,9 @@ const GameBoard = ({prizes, randomPackage, elemPositions}) => {
                             <React.Fragment key={index}>
                                 {elemPositions[item][el].template == 'miss' 
                                     ? 
-                                    <div className={"missedEl gridElm gridElm" + index}></div> 
+                                    <div className={"missedEl gridElm0"}></div> 
                                     : 
-                                    <div className={"targetEl gridElm gridElm" + index}>
+                                    <div className={"targetEl gridElm"}>
                                         <p></p>
                                     </div>
                                 }

@@ -243,6 +243,48 @@ a.close.closePopupBtn {
     padding: 10px;
 }
 
+.shootingElmAnimated {
+    position: absolute;
+    z-index: 9999;
+    padding-left: 0.75%;
+    animation-fill-mode: forwards;
+    display: block;
+}
+
+
+
+@keyframes kickAnimation {
+
+    0% {
+
+        -webkit-transform: rotate(0deg);
+
+        -moz-transform: rotate(0deg);
+
+        -ms-transform: rotate(0deg);
+
+        -o-transform: rotate(0deg);
+
+        transform: rotate(0deg);
+
+    }
+
+    100% {
+
+        -webkit-transform: rotate(180deg);
+
+        -moz-transform: rotate(180deg);
+
+        -ms-transform: rotate(180deg);
+
+        -o-transform: rotate(180deg);
+
+        transform: rotate(180deg);
+
+    }
+
+}
+
 @media only screen and (max-width: 768px) {
 
 

@@ -12,7 +12,7 @@ const GameWrapper = ({claimStatus}) => {
         1: {
             id: 1,
             totalPrize: 20,
-            positions: [100,30,50,15,25,12],
+            positions: [100,10,50,15,25,12],
             throws: [10, 10]
         }
     }

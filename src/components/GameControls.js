@@ -5,6 +5,28 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
     let [gameOver, setGameOver] = useState(false);
     let [throwsNo, setThrowsNo] = useState(maxThrows);
 
+    
+
+    const handleAnimation = (position) => {
+        const eggItem = document.querySelector('.shootingElm');
+        const eggItemAnimated = document.querySelector('.shootingElmAnimated');
+        const selectedGridEl = document.querySelector('.gridElm' + position);
+        let shootingElmOnTargetSize = (selectedGridEl.getBoundingClientRect().width * 60 / 100);
+        let topOffsetVal = 0;
+        let leftOffsetVal = 0;
+
+        
+        eggItemAnimated.style.left = ((selectedGridEl.getBoundingClientRect().left + (selectedGridEl.getBoundingClientRect().width / 2 - (shootingElmOnTargetSize / 2))) - leftOffsetVal) + 'px';
+        eggItemAnimated.style.top = ((selectedGridEl.getBoundingClientRect().top + (selectedGridEl.getBoundingClientRect().width / 2 - (shootingElmOnTargetSize / 2))) - topOffsetVal) + 'px';
+        eggItemAnimated.style.width = shootingElmOnTargetSize + 'px';
+        eggItemAnimated.style.animationName = "kickAnimation";
+        eggItemAnimated.style.animationDuration = "1s";
+        eggItemAnimated.style.animationDelay = "1s";
+ 
+    }
+
+
+
     const handleClick = () => {
         const targetImg = document.querySelector('.targetImgs');
 
@@ -12,6 +34,8 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
             if(gameOver == false) {
                 if(prizes[randomPackage].throws[eggThrow] == 0) {
                     console.log("target missed");
+
+                    handleAnimation(0);
 
                     setThrowsNo(throwsNo - 1);
                     let missedImg = document.createElement('img');
@@ -29,6 +53,10 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
                 } else {
                     console.log("congrats")
                     setThrowsNo(throwsNo - 1);
+                    handleAnimation(prizes[randomPackage].throws[eggThrow]);
+
+                    console.log(document.querySelector('.gridElm' + prizes[randomPackage].throws[eggThrow]))
+
                     let successImg = document.createElement('img');
                     successImg.src = '/images/success-target.png';
                     successImg.id = 'successTarget';
@@ -81,6 +109,9 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
                         <img className="arrow-" src="" />
                     </div>
                 </div>
+
+                <img className="shootingElmAnimated" src="/images/egg.png"/>
+                
 
                 <div className="controlBox throwButtonContainer playBtn">
                     <button className="buttonText" onClick={handleClick}>ARUNCA</button>
