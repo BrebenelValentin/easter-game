@@ -15,20 +15,22 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
         let topOffsetVal = 0;
         let leftOffsetVal = 0;
 
-        
+        eggItemAnimated.style.transition = "all 800ms ease";
         eggItemAnimated.style.left = ((selectedGridEl.getBoundingClientRect().left + (selectedGridEl.getBoundingClientRect().width / 2 - (shootingElmOnTargetSize / 2))) - leftOffsetVal) + 'px';
         eggItemAnimated.style.top = ((selectedGridEl.getBoundingClientRect().top + (selectedGridEl.getBoundingClientRect().width / 2 - (shootingElmOnTargetSize / 2))) - topOffsetVal) + 'px';
         eggItemAnimated.style.width = shootingElmOnTargetSize + 'px';
         eggItemAnimated.style.animationName = "kickAnimation";
-        eggItemAnimated.style.animationDuration = "1s";
-        eggItemAnimated.style.animationDelay = "1s";
- 
+        eggItemAnimated.style.animationDuration = "2s";
+        eggItemAnimated.style.opacity = "1";
+        eggItem.style.opacity = "0";
     }
 
 
 
     const handleClick = () => {
         const targetImg = document.querySelector('.targetImgs');
+        const eggItemAnimated = document.querySelector('.shootingElmAnimated');
+        const eggItem = document.querySelector('.shootingElm');
 
         if(eligibleStatus === 1){
             if(gameOver == false) {
@@ -42,13 +44,27 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
                     missedImg.src = '/images/miss-target.png';
                     missedImg.id = 'missTarget';
 
-                    targetImg.appendChild(missedImg);
-                    targetImg.style.display = 'flex';
 
+
+                    setTimeout(() => {
+                        eggItemAnimated.style.transition = "none";
+                        eggItemAnimated.style.animation = "none";
+                        eggItemAnimated.style.opacity = "0";
+                        eggItemAnimated.style.top = document.querySelector('.shootingElm').getBoundingClientRect().top + "px";
+                        eggItemAnimated.style.left = document.querySelector('.shootingElm').getBoundingClientRect().left + "px";
+                        eggItemAnimated.style.bottom = "0";
+                        eggItemAnimated.style.paddingBottom = "0";
+                        eggItemAnimated.style.marginBottom = "0";
+                        eggItemAnimated.style.paddingLeft = "0";
+                        targetImg.appendChild(missedImg);
+                        targetImg.style.display = 'flex';
+                    }, 2000)
+                    
                     setTimeout(() => {
                         missedImg.remove();
                         targetImg.style.display = 'none';
-                    }, 1500)
+                        eggItem.style.opacity = "1";
+                    }, 4000)
 
                 } else {
                     console.log("congrats")
@@ -61,13 +77,26 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
                     successImg.src = '/images/success-target.png';
                     successImg.id = 'successTarget';
 
-                    targetImg.appendChild(successImg);
-                    targetImg.style.display = 'flex';
+                    setTimeout(() => {
+                        eggItemAnimated.style.transition = "none";
+                        eggItemAnimated.style.animation = "none";
+                        eggItemAnimated.style.opacity = "0";
+                        eggItemAnimated.style.top = document.querySelector('.shootingElm').getBoundingClientRect().top + "px";
+                        eggItemAnimated.style.left = document.querySelector('.shootingElm').getBoundingClientRect().left + "px";
+                        eggItemAnimated.style.bottom = "0";
+                        eggItemAnimated.style.paddingBottom = "0";
+                        eggItemAnimated.style.marginBottom = "0";
+                        eggItemAnimated.style.paddingLeft = "0";
+                      
+                        targetImg.appendChild(successImg);
+                        targetImg.style.display = 'flex';
+                    }, 2000)
 
                     setTimeout(() => {
                         successImg.remove();
                         targetImg.style.display = 'none';
-                    }, 1500)
+                        eggItem.style.opacity = "1";
+                    }, 4000)
                 }
     
                 setEggThrow(eggThrow + 1);
@@ -91,6 +120,13 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
         }, 2500)
     }
 
+  
+
+    const getEggPosition = {
+        top: document.querySelector('.shootingElm') ? document.querySelector('.shootingElm').getBoundingClientRect().top + "px" : "0",
+        left: document.querySelector('.shootingElm') ? document.querySelector('.shootingElm').getBoundingClientRect().left + "px" : "0"
+    };
+
     return (
         <>
             <div className="gameControls">
@@ -110,7 +146,7 @@ const GameControls = ({prizes, randomPackage, maxThrows, eligibleStatus}) => {
                     </div>
                 </div>
 
-                <img className="shootingElmAnimated" src="/images/egg.png"/>
+                <img className="shootingElmAnimated" src="/images/egg.png" style={getEggPosition}/>
                 
 
                 <div className="controlBox throwButtonContainer playBtn">

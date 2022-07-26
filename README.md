@@ -4,6 +4,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+To start the json server
+### `npx json-server --watch data/claimData.json --port 8000`
+
 In the project directory, you can run:
 
 ### `npm start`
